@@ -24,9 +24,9 @@ class PostsViewsTests(TestCase):
         cls.user1 = User.objects.create_user(username='tester1')
         cls.user2 = User.objects.create_user(username='tester2')
         cls.group = Group.objects.create(
-            title='Тестовая группа',
+            title='test group',
             slug='test_slug',
-            description='Тестовое описание',
+            description='Test description',
         )
         small_gif = (
             b'\x47\x49\x46\x38\x39\x61\x02\x00'
@@ -44,12 +44,12 @@ class PostsViewsTests(TestCase):
 
         cls.post1 = Post.objects.create(
             author=cls.user1,
-            text='Тестовый пост 1'
+            text='Test post 1'
         )
         sleep(0.1)
         cls.post2 = Post.objects.create(
             author=cls.user2,
-            text='Тестовый пост 2',
+            text='Test post 2',
             group=cls.group,
             image=cls.uploaded
         )
@@ -66,7 +66,7 @@ class PostsViewsTests(TestCase):
         cache.clear()
 
     def test_pages_uses_correct_template(self):
-        """URL-адрес использует соответствующий шаблон."""
+        """The URL uses the appropriate pattern."""
 
         templates_page_names = [
             ('posts/index.html', reverse('posts:index')),
@@ -94,7 +94,7 @@ class PostsViewsTests(TestCase):
                 self.assertTemplateUsed(
                     response,
                     template,
-                    f'Ошибка шаблона для адреса "{reverse_name}"'
+                    f'Address template error "{reverse_name}"'
                 )
 
     def object_context_tester(self, context_object, fixture_object):
@@ -108,14 +108,14 @@ class PostsViewsTests(TestCase):
         self.assertEqual(post_image, fixture_object.image)
 
     def test_index_shows_correct_context(self):
-        """Шаблон index сформирован с правильным контекстом."""
+        """The index template is formed with the correct context."""
         response = self.authorized_client.get(reverse('posts:index'))
         first_object = response.context['page_obj'][0]
         self.object_context_tester(first_object, self.post2)
         self.assertEqual(len(response.context['page_obj']), 2)
 
     def test_group_list_shows_correct_context(self):
-        """Шаблон group_list сформирован с правильным контекстом."""
+        """The group_list template is formed with the correct context."""
         response = self.authorized_client.get(
             reverse('posts:group_list', args=(self.group.slug, ))
         )
@@ -124,7 +124,7 @@ class PostsViewsTests(TestCase):
         self.assertEqual(len(response.context['page_obj']), 1)
 
     def test_profile_shows_correct_context(self):
-        """Шаблон profile сформирован с правильным контекстом."""
+        """The profile template is formed with the correct context."""
         response = self.authorized_client.get(
             reverse('posts:profile', args=(self.user2.username, ))
         )
@@ -133,7 +133,7 @@ class PostsViewsTests(TestCase):
         self.assertEqual(len(response.context['page_obj']), 1)
 
     def test_post_detail_shows_correct_context(self):
-        """Шаблон post_detail сформирован с правильным контекстом."""
+        """The post_detail template is formed with the correct context."""
         response = self.authorized_client.get(
             reverse('posts:post_detail', args=(self.post2.id, ))
         )
@@ -141,7 +141,7 @@ class PostsViewsTests(TestCase):
         self.object_context_tester(object, self.post2)
 
     def test_post_edit_shows_correct_context(self):
-        """Шаблон post_edit сформирован с правильным контекстом."""
+        """The post_edit template is formed with the correct context."""
         response = self.authorized_client.get(
             reverse('posts:post_edit', args=(self.post1.id, ))
         )
@@ -156,7 +156,7 @@ class PostsViewsTests(TestCase):
         self.assertEqual(response.context.get('form').instance, self.post1)
 
     def test_post_create_shows_correct_context(self):
-        """Шаблон post_create сформирован с правильным контекстом."""
+        """The post_create template is formed with the correct context."""
         response = self.authorized_client.get(reverse('posts:post_create'))
         form_fields = {
             'text': forms.fields.CharField,
@@ -168,24 +168,24 @@ class PostsViewsTests(TestCase):
                 self.assertIsInstance(form_field, expected)
 
     def test_new_comments_for_authorized_only(self):
-        """Поле ввода комментария не видно гостю"""
+        """The comment input field is not visible to the guest"""
         response = self.guest_client.get(
             reverse('posts:post_detail', args=(self.post1.id, ))
         )
-        self.assertNotContains(response, "Добавить комментарий:")
+        self.assertNotContains(response, "Add a comment:")
 
     def test_index_page_cache(self):
-        """Проверка хранения и очищения кэша главной страницы"""
+        """Checking the storage and clearing the cache of the main page"""
         response_1 = self.guest_client.get(reverse('posts:index'))
         Post.objects.create(
             author=self.user1,
-            text='Новый пост'
+            text='New post'
         )
         response_2 = self.guest_client.get(reverse('posts:index'))
         self.assertEqual(
             response_1.content,
             response_2.content,
-            'Кэширование на главной не работает')
+            'Caching on homepage not working')
         cache.clear()
         response_3 = self.guest_client.get(reverse('posts:index'))
         self.assertNotEqual(response_2.content, response_3.content)
@@ -197,9 +197,9 @@ class PaginatorViewsTests(TestCase):
         super().setUpClass()
         cls.user = User.objects.create_user(username='tester1')
         cls.group = Group.objects.create(
-            title='Тестовая группа',
+            title='test group',
             slug='test_slug',
-            description='Тестовое описание',
+            description='Test description',
         )
         objs = [Post(author=cls.user, text='', group=cls.group)] * POSTS_SAMPLE
         Post.objects.bulk_create(objs, ignore_conflicts=True)
@@ -208,7 +208,7 @@ class PaginatorViewsTests(TestCase):
         self.guest_client = Client()
 
     def test_paginator(self):
-        """ Работа пагинатора на 1 и последней странице"""
+        """ Paginator work on the 1st and last page"""
         last_page = ceil(POSTS_SAMPLE / POSTS_PER_PAGE)
         posts_last_page = POSTS_SAMPLE - (last_page - 1) * POSTS_PER_PAGE
         pages_data = [(POSTS_PER_PAGE, 1), (posts_last_page, last_page)]
@@ -226,8 +226,8 @@ class PaginatorViewsTests(TestCase):
                     self.assertEqual(
                         len(response.context['page_obj']),
                         posts_on_page,
-                        f'Неверная работа пагинатора на {url}, '
-                        f'страница №{page_number}'
+                        f'Incorrect work of the paginator on {url}, '
+                        f'page no.{page_number}'
                     )
 
 

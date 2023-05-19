@@ -1,43 +1,43 @@
 {% extends "base.html" %}
-{% block title %}О проекте{% endblock %}
+{% block title %}about the project{% endblock %}
 {% block content %}
   {% load static %}
   <div class="row border rounded mb-4 shadow-sm">
     <div class="col p-4 d-flex flex-column">
-      <h1 class="display-5 fw-bold text-center">Что это за проект?</h1><br>
+      <h1 class="display-5 fw-bold text-center">What is this project?</h1><br>
       <div class="row">
         <div class="col-auto col-md-2 nav flex-column nav-pills me-3" role="tablist" aria-orientation="vertical">
           <button class="nav-link active" id="v-pills-project-tab" data-bs-toggle="pill" data-bs-target="#v-pills-project" 
             type="button" role="tab" aria-controls="v-pills-project" aria-selected="true">
-              О проекте
+            about the project
           </button>
           <button class="nav-link" data-bs-toggle="pill" data-bs-target="#v-pills-tools" 
             type="button" role="tab" aria-controls="v-pills-tools" aria-selected="false">
-              Инструменты
+            Tools
           </button>
           <button class="nav-link" data-bs-toggle="pill" data-bs-target="#v-pills-features" 
             type="button" role="tab" aria-controls="v-pills-features" aria-selected="false">
-              Возможности
+            Possibilities
           </button>
           <button class="nav-link" id="v-pills-author-tab" data-bs-toggle="pill" data-bs-target="#v-pills-author" 
             type="button" role="tab" aria-controls="v-pills-author" aria-selected="false">
-              Об авторе
+            about the author
         </button>
       </div>
         <div class="col-12 col-md-9 tab-content" id="v-pills-tabContent">
           <div class="tab-pane fade show active" id="v-pills-project" role="tabpanel" aria-labelledby="v-pills-project-tab">
             <p>
-              <h4>Сайт был создан в рамках обучения на курсе Яндекс-Практикум: Бэкенд-разработчик на Python</h4>
+              <h4>The site was created as part of the course Yandex-Workshop: Python back-end developer</h4>
             </p>
             <p>
-              <h6>Основные цели:</h6>
+              <h6>Basic goals:</h6>
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">Разобраться в работе IDE Visual Studio Code</li>
-                <li class="list-group-item">Улучшить понимание принципов ООП</li>
-                <li class="list-group-item">Познакомиться с возможностями фреймворка Django</li>
-                <li class="list-group-item">Получить представления о фронтенд: HTML и CSS</li>
-                <li class="list-group-item">Сделать первый проект для своего портфолио</li>
-                <li class="list-group-item">Сдать все вовремя и не вылететь с курса</li>
+                <li class="list-group-item">Understand how the Visual Studio Code IDE works</li>
+                <li class="list-group-item">Improve understanding of OOP principles</li>
+                <li class="list-group-item">Familiarize yourself with the Django framework</li>
+                <li class="list-group-item">Get an idea about the frontend: HTML and CSS</li>
+                <li class="list-group-item">Make the first project for your portfolio</li>
+                <li class="list-group-item">Pass everything on time and not fly out of the course</li>
               </ul>
             </p>
           </div>
@@ -61,18 +61,18 @@
             </ul>
           </div>
           <div class="tab-pane fade" id="v-pills-features" role="tabpanel" aria-labelledby="v-pills-features-tab">
-            <h2>Заложенные возможности по ТЗ заказчика:</h2>
+            <h2>Embedded capabilities according to the customer's specification:</h2>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">Страницы: главная, страница сообщества, профайл автора с постами, карточка поста</li>
-              <li class="list-group-item">Создание и редактирование постов</li>
-              <li class="list-group-item">Создание комментариев к посту</li>
-              <li class="list-group-item">Работа с сообществами (создание через админ-панель и его опциональный выбор в посте)</li>
-              <li class="list-group-item">Возможность подписок на авторов (лента подписки с переключателем на главную страницу)</li>
-              <li class="list-group-item">Возможность добавления картинок к постам</li>
-              <li class="list-group-item">Настроенная админ-панель</li>
-              <li class="list-group-item">Работа с пользователями: регистрация новых, вход/выход, смена пароля и восстановление пароля (эмулятор)</li>
+              <li class="list-group-item">Pages: home page, community page, author profile with posts, post card</li>
+              <li class="list-group-item">Creating and editing posts</li>
+              <li class="list-group-item">Creating comments on a post</li>
+              <li class="list-group-item">Working with communities (creation through the admin panel and its optional selection in the post)</li>
+              <li class="list-group-item">Ability to subscribe to authors (subscription feed with a switch to the main page)</li>
+              <li class="list-group-item">Ability to add images to posts</li>
+              <li class="list-group-item">Customized admin panel</li>
+              <li class="list-group-item">Working with users: registering new ones, logging in / out, changing passwords and recovering passwords (emulator)</li>
             </ul>
-            <h2>Реализовано помимо пожеланий заказчика из ЯП:</h2>
+            <h2>Implemented in addition to the wishes of the customer from the YaP:</h2>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">Страницы: навигация по группам и авторам с авторами-лидерами по постам и комментариям</li>
               <li class="list-group-item">Личный кабинет с полями за рамками стандартной модели (аватары, доп.инфо об авторе)</li>

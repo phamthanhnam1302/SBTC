@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Профайл пользователя {{ author.username }}{% endblock %}
+{% block title %}User profile {{ author.username }}{% endblock %}
 {% block content %}
 {% load thumbnail %}
 {% load static %}
@@ -18,7 +18,7 @@
       <div class="col-auto col-md-6">
         <div class="row">
           <div class="col-3">
-            Автор:
+            Author:
           </div>
           <div class="col-auto">
             {% if author.get_full_name %} 
@@ -29,7 +29,7 @@
         </div>
         {% if author.profile.bio %}
         <div class="row">
-          <div class="col-3">Об авторе:</div>
+          <div class="col-3">About the author:</div>
           <div class="col md-auto">{{ author.profile.bio|linebreaksbr }}</div>
         </div>
         {% endif %}
@@ -41,7 +41,7 @@
         {% endif %}
         {% if author.profile.birth_date %}
         <div class="row">
-          <div class="col-3">День рождения:</div>
+          <div class="col-3">Birthday:</div>
           <div class="col md-auto">{{ author.profile.birth_date|date:"j M" }}</div>
         </div>
         {% endif %}
@@ -55,20 +55,20 @@
           class="btn btn-lg btn-danger"
           href="{% url 'posts:profile_unfollow' author.username %}" role="button"
         >
-          Отписаться
+        Unsubscribe
         </a>
       {% else %}
           <a
             class="btn btn-lg btn-primary"
             href="{% url 'posts:profile_follow' author.username %}" role="button"
           >
-            Подписаться
+        Subscribe
           </a>
       {% endif %} 
     {% endif %}   
 
 
-    <h1 class="fw-bold">Все посты автора ({{ author.posts.count }})</h1>
+    <h1 class="fw-bold">All posts by the author({{ author.posts.count }})</h1>
     
     
 

@@ -13,13 +13,13 @@ class URLTests(TestCase):
         cls.user = User.objects.create_user(username='tester')
         cls.user2 = User.objects.create_user(username='tester2')
         cls.group = Group.objects.create(
-            title='Тестовая группа',
+            title='test group',
             slug='test_slug',
-            description='Тестовое описание',
+            description='Test description',
         )
         cls.post = Post.objects.create(
             author=cls.user,
-            text='Тестовый пост',
+            text='test post',
             group=cls.group
         )
         cls.urls_data = [
@@ -44,29 +44,29 @@ class URLTests(TestCase):
         cache.clear()
 
     def test_urls_are_available_for_guest(self):
-        """ Проверка доступа к страницам без авторизации """
+        """ Checking access to pages without authorization """
         for url, guest_status, _ in self.urls_data:
             with self.subTest(url=url):
                 response = self.guest_client.get(url)
                 self.assertEqual(
                     response.status_code,
                     guest_status,
-                    f'Ошибка доступа к "{url}" без авторизации'
+                    f'Error accessing "{url}" without authorization'
                 )
 
     def test_urls_are_available_for_authorized(self):
-        """ Проверка доступа с авторизацией """
+        """ Authorized access check """
         for url, _, user_status in self.urls_data:
             with self.subTest(url=url):
                 response = self.authorized_client.get(url)
                 self.assertEqual(
                     response.status_code,
                     user_status,
-                    f'Ошибка доступа к "{url}" с авторизацией'
+                    f'Error accessing "{url}" with authorization'
                 )
 
     def test_urls_use_correct_template(self):
-        """URL-адрес использует соответствующий шаблон."""
+        """The URL uses the appropriate pattern."""
         templates_url_names = [
             ('posts/index.html', '/'),
             ('posts/group_list.html', f'/group/{self.group.slug}/'),
@@ -82,11 +82,11 @@ class URLTests(TestCase):
                 self.assertTemplateUsed(
                     response,
                     template,
-                    f'Ошибка использования шаблона для адреса "{url}"'
+                    f'Error using template for address "{url}"'
                 )
 
     def test_redirections_for_guest(self):
-        """Переадресация гостя на недоступных страницах"""
+        """Guest redirect on inaccessible pages"""
         urls_for_authenticated = (
             f'/posts/{self.post.pk}/edit/',
             '/create/',
@@ -103,7 +103,7 @@ class URLTests(TestCase):
                 )
 
     def test_redirects_nonauthor_editing_post(self):
-        """ Проверка переадресации неавтора при редактировании поста """
+        """ Checking for non-author redirects when editing a post """
         self.authorized_client.force_login(self.user2)
         response = self.authorized_client.get(
             f'/posts/{self.post.pk}/edit/', follow=True
@@ -111,7 +111,7 @@ class URLTests(TestCase):
         self.assertRedirects(response, f'/posts/{self.post.pk}/')
 
     def test_guest_cant_push_comments_and_posts(self):
-        """Гость не может запушить посты и комментарий методом post"""
+        """Guest can't push posts and comments with the post method"""
         form_data = {'text': 'test', }
         urls_for_posting = [
             f'/posts/{self.post.pk}/comment/',

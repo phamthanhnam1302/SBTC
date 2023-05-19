@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='profile',
             name='photo',
-            field=models.ImageField(blank=True, help_text='Приложите свое фото', upload_to='profile/', verbose_name='Фото'),
+            field=models.ImageField(blank=True, help_text='Attach your photo', upload_to='profile/', verbose_name='Photo'),
         ),
     ]

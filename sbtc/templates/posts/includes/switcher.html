@@ -7,7 +7,7 @@
             class="nav-link {% if view_name == 'posts:index' %}active{% endif %}"
             href="{% url 'posts:index' %}"
           >
-            Все посты
+          All posts
           </a>
         </li>
         <li class="nav-item">
@@ -15,7 +15,7 @@
             class="nav-link {% if view_name == 'posts:follow_index' %}active{% endif %}"
             href="{% url 'posts:follow_index' %}"
           >
-            Подписки
+          Subscriptions
           </a>
         </li>
         <li class="nav-item">
@@ -23,14 +23,14 @@
             class="nav-link {% if view_name == 'posts:authors_list' %} active {% endif %}"
             href="{% url 'posts:authors_list' %}"
           >
-            Авторы
+          Authors
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link {% if view_name == 'posts:groups' %} active {% endif %}"
              href="{% url 'posts:groups' %}"
           >
-            Группы
+          Groups
           </a>
         </li>
       </ul>

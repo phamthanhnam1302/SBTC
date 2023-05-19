@@ -1,12 +1,12 @@
 {% extends "base.html" %}
-{% block title %}Личный кабинет {{request.user.get_full_name}}{% endblock %}
+{% block title %}Personal account {{request.user.get_full_name}}{% endblock %}
 {% block content %}
   {% load user_filters %}
   {% load thumbnail %}
   {% load static %}
   <div class="row justify-content-center">
     <h1 class="display-5 fw-bold text-center">
-        Ваш Личный кабинет 
+      Your Personal Account 
     </h1>
     <div class="col-auto">
       {% if user.profile.photo %}
@@ -19,7 +19,7 @@
     </div>
     <div class="col-auto">
       <h1>
-        Пользователь <i>{{ request.user.username }}</i>
+        User <i>{{ request.user.username }}</i>
       </h1>
     </div>
     <div class="col-md-8 p-5">
@@ -87,7 +87,7 @@
         {% endfor %}
         <div class="col-md-6 offset-md-4">
         <button type="submit" class="btn btn-primary">
-            Сохранить изменения
+          Save Changes
         </button>
         </div>
       </form>

@@ -14,7 +14,7 @@ class StaticURLTests(TestCase):
         self.authorized_client.force_login(self.user)
 
     def test_urls_are_available_for_guest(self):
-        """ Проверка доступа к страницам без авторизации """
+        """ Checking access to pages without authorization """
         urls_loggedout = {
             '/about/tech/': HTTPStatus.OK,
             '/about/author/': HTTPStatus.OK,
@@ -26,11 +26,11 @@ class StaticURLTests(TestCase):
                 self.assertEqual(
                     response.status_code,
                     status,
-                    f'Ошибка доступа к {url} без авторизации'
+                    f'Error accessing {url} without authorization'
                 )
 
     def test_urls_are_available_for_authorized(self):
-        """ Проверка доступа с авторизацией """
+        """ Authorized access check """
         urls_loggedin = {
             '/about/tech/': HTTPStatus.OK,
             '/about/author/': HTTPStatus.OK,
@@ -42,11 +42,11 @@ class StaticURLTests(TestCase):
                 self.assertEqual(
                     response.status_code,
                     status,
-                    f'Ошибка доступа к {url} с авторизацией'
+                    f'Error accessing {url} with authorization'
                 )
 
     def test_urls_use_correct_template(self):
-        """URL-адрес использует соответствующий шаблон."""
+        """The URL uses the appropriate pattern."""
         templates_url_names = {
             '/about/tech/': 'about/tech.html',
             '/about/author/': 'about/author.html',
@@ -57,5 +57,5 @@ class StaticURLTests(TestCase):
                 self.assertTemplateUsed(
                     response,
                     template,
-                    f'Ошибка использования шаблона для {url}'
+                    f'Error using template for {url}'
                 )
