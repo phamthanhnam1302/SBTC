@@ -10,30 +10,30 @@ User = get_user_model()
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(
-        'Об авторе',
+        'about the author',
         max_length=500,
         blank=True,
         null=True,
-        help_text='Расскажите о себе'
+        help_text='tell us about yourself'
     )
     location = models.CharField(
-        'Город',
+        'City',
         max_length=30,
         blank=True,
         null=True,
-        help_text='Где Вы живете?'
+        help_text='Where do you live?'
     )
     birth_date = models.DateField(
-        'Дата рождения',
+        'Date of Birth',
         null=True,
         blank=True,
-        help_text='Укажите дату рождения'
+        help_text='Enter date of birth'
     )
     photo = models.ImageField(
-        'Фото',
+        'Photo',
         upload_to='profile/',
         blank=True,
-        help_text='Приложите свое фото',
+        help_text='Attach your photo',
     )
 
     def __str__(self):

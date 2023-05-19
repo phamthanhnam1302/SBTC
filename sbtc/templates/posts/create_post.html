@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}
   {% if is_edit %}
-    Редактировать пост
+  Edit post
   {% else %}
-    Новый пост
+    New post
   {% endif %}
 {% endblock %}
 {% block content %}
@@ -14,9 +14,9 @@
         <div class="card-body">
           <h1 class="fw-bold text-center">
             {% if is_edit %}
-              Редактировать пост
+            Edit post
             {% else %}
-              Новый пост
+            New post
             {% endif %}
           </h1>
           <form method="post" enctype="multipart/form-data">
@@ -36,9 +36,9 @@
             <div class="d-flex justify-content-end">
               <button type="submit" class="btn btn-primary">
                 {% if is_edit %}
-                  Сохранить
+                Save
                 {% else %}
-                  Добавить
+                Add
                 {% endif %}
               </button>
             </div>

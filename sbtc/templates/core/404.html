@@ -2,10 +2,10 @@
 {% block title %}Custom 404{% endblock %}
 {% block content %}
   <div class="text-center">
-    <h1 class="display-1">Ошибка 404</h1>
-    <p>Страница <mark>{{ path }}</mark> не найдена</p>
+    <h1 class="display-1">Error 404</h1>
+    <p>Page <mark>{{ path }}</mark> not found</p>
     <a href="{% url 'posts:index' %}">
-      Попробуйте начать поиски снова с главной страницы
+      Try starting your search again from the main page
     </a>
   </div>  
 {% endblock %} 

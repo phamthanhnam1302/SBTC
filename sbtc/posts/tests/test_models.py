@@ -12,13 +12,13 @@ class PostModelTest(TestCase):
         super().setUpClass()
         cls.user = User.objects.create_user(username='auth')
         cls.group = Group.objects.create(
-            title='Тестовая группа',
-            slug='Тестовый слаг',
-            description='Тестовое описание',
+            title='test group',
+            slug='test slug',
+            description='Test description',
         )
         cls.post = Post.objects.create(
             author=cls.user,
-            text='Тестовый пост',
+            text='test post',
         )
 
     def setUp(self):
@@ -26,28 +26,28 @@ class PostModelTest(TestCase):
         self.group = PostModelTest.group
 
     def test_models_have_correct_object_names(self):
-        """У моделей корректно работает __str__."""
+        """__str__ works correctly for models."""
         post_expected_name = self.post.text[:15]
         self.assertEqual(
             post_expected_name,
             str(self.post),
-            'Ошибка вывода наименования поста'
+            'Post title error'
         )
 
         group_expected_name = self.group.title
         self.assertEqual(
             group_expected_name,
             str(self.group),
-            'Ошибка вывода наименования группы'
+            'Group name output error'
         )
 
     def test_verbose_name(self):
-        """verbose_name в полях совпадает с ожидаемым."""
+        """verbose_name in the fields is the same as expected."""
         field_verboses = {
-            'text': 'Текст поста',
-            'pub_date': 'Дата публикации',
-            'author': 'Автор',
-            'group': 'Группа',
+            'text': 'Post text',
+            'pub_date': 'Publication date',
+            'author': 'Author',
+            'group': 'Group',
         }
         for value, expected in field_verboses.items():
             with self.subTest(value=value):
@@ -55,10 +55,10 @@ class PostModelTest(TestCase):
                     self.post._meta.get_field(value).verbose_name, expected)
 
     def test_help_text(self):
-        """help_text в полях совпадает с ожидаемым."""
+        """help_text in the fields is the same as expected."""
         field_help_texts = {
-            'text': 'Введите текст поста',
-            'group': 'Группа, к которой будет относиться пост'
+            'text': 'Enter your post text',
+            'group': 'The group to which the post belongs'
         }
         for value, expected in field_help_texts.items():
             with self.subTest(value=value):
