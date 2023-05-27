@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}about the project{% endblock %}
+{% block title %}About the project{% endblock %}
 {% block content %}
   {% load static %}
   <div class="row border rounded mb-4 shadow-sm">
@@ -9,7 +9,7 @@
         <div class="col-auto col-md-2 nav flex-column nav-pills me-3" role="tablist" aria-orientation="vertical">
           <button class="nav-link active" id="v-pills-project-tab" data-bs-toggle="pill" data-bs-target="#v-pills-project" 
             type="button" role="tab" aria-controls="v-pills-project" aria-selected="true">
-            about the project
+            About the project
           </button>
           <button class="nav-link" data-bs-toggle="pill" data-bs-target="#v-pills-tools" 
             type="button" role="tab" aria-controls="v-pills-tools" aria-selected="false">
@@ -21,23 +21,23 @@
           </button>
           <button class="nav-link" id="v-pills-author-tab" data-bs-toggle="pill" data-bs-target="#v-pills-author" 
             type="button" role="tab" aria-controls="v-pills-author" aria-selected="false">
-            about the author
+            About the author
         </button>
       </div>
         <div class="col-12 col-md-9 tab-content" id="v-pills-tabContent">
           <div class="tab-pane fade show active" id="v-pills-project" role="tabpanel" aria-labelledby="v-pills-project-tab">
             <p>
-              <h4>The site was created as part of the course Yandex-Workshop: Python back-end developer</h4>
+              <h4>The website was created as part of the course Introduction to Software Engineering - IT3180E, taught by Mr. Trinh Thanh Trung</h4>
             </p>
             <p>
               <h6>Basic goals:</h6>
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">Understand how the Visual Studio Code IDE works</li>
-                <li class="list-group-item">Improve understanding of OOP principles</li>
-                <li class="list-group-item">Familiarize yourself with the Django framework</li>
-                <li class="list-group-item">Get an idea about the frontend: HTML and CSS</li>
-                <li class="list-group-item">Make the first project for your portfolio</li>
-                <li class="list-group-item">Pass everything on time and not fly out of the course</li>
+                <li class="list-group-item">Understanding the Software Development Life Cycle</li>
+                <li class="list-group-item">Applying Software Engineering Principles</li>
+                <li class="list-group-item">Collaboration and Teamwork</li>
+                <li class="list-group-item">Problem-Solving and Critical Thinking</li>
+                <li class="list-group-item">Software Development Process Management</li>
+                <li class="list-group-item">Delivering a Functional Software Product</li>
               </ul>
             </p>
           </div>
@@ -56,34 +56,26 @@
                 <img src="{% static 'img/fav/bootstrap-logo.svg' %}" width="30"> Bootstrap
               </li>
               <li class="list-group-item">
-                <img src="{% static 'img/fav/god.jpg' %}" width="30"> Божья помощь
+                <img src="{% static 'img/fav/sqlite.jpg' %}" width="30"> SQLite
               </li>
             </ul>
           </div>
           <div class="tab-pane fade" id="v-pills-features" role="tabpanel" aria-labelledby="v-pills-features-tab">
-            <h2>Embedded capabilities according to the customer's specification:</h2>
+            <h2>Available Features:</h2>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">Pages: home page, community page, author profile with posts, post card</li>
-              <li class="list-group-item">Creating and editing posts</li>
-              <li class="list-group-item">Creating comments on a post</li>
-              <li class="list-group-item">Working with communities (creation through the admin panel and its optional selection in the post)</li>
-              <li class="list-group-item">Ability to subscribe to authors (subscription feed with a switch to the main page)</li>
-              <li class="list-group-item">Ability to add images to posts</li>
-              <li class="list-group-item">Customized admin panel</li>
-              <li class="list-group-item">Working with users: registering new ones, logging in / out, changing passwords and recovering passwords (emulator)</li>
-            </ul>
-            <h2>Implemented in addition to the wishes of the customer from the YaP:</h2>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Страницы: навигация по группам и авторам с авторами-лидерами по постам и комментариям</li>
-              <li class="list-group-item">Личный кабинет с полями за рамками стандартной модели (аватары, доп.инфо об авторе)</li>
-              <li class="list-group-item">Пользовательские и стандартные аватары</li>
-              <li class="list-group-item">Удаление постов</li>
-              <li class="list-group-item">Удаление комментариев</li>
-              <li class="list-group-item">Система лайков понравившимся постам</li>
-              <li class="list-group-item">Отражение информации о лайках и комментариях в лентах постов с рабочими ссылками</li>
-              <li class="list-group-item">Возможность поиска в постах по ключевым словам</li>
-              <li class="list-group-item">Система тегов для навигации по постам в виде разноцветных кнопок</li>
-              <li class="list-group-item">Немного красоты: кнопки действий вместо ссылок, картинки к кнопкам, посты в виде карточек, оптимизация для различных устройств</li>
+              <li class="list-group-item">Pages: main page, the author profile with posts</li>
+              <li class="list-group-item">Create, and edit posts with images attached and delete posts</li>
+              <li class="list-group-item">Ability to generate images automatically with tags (Cycle GAN)</li>
+              <li class="list-group-item">Create comments on posts</li>
+              <li class="list-group-item">Possibility to follow the author (subscription feed with the transition to the main page)</li>
+              <li class="list-group-item">Custom admin panel</li>
+              <li class="list-group-item">Working with users: new registration, login/logout, password change, and password recovery (emulator)</li>
+              <li class="list-group-item">Pages: group and author navigation with top authors by posts and comments</li>
+              <li class="list-group-item">Personal account with fields: avatar (custom), additional information about the author</li>
+              <li class="list-group-item">The system likes posts like</li>
+              <li class="list-group-item">Reflect information about likes and comments in a post's feed</li>
+              <li class="list-group-item">Search articles by keyword</li>
+              <li class="list-group-item">Display articles as a tag system</li>
             </ul>
           </div>
           <div class="tab-pane fade" id="v-pills-author" role="tabpanel" aria-labelledby="v-pills-author-tab">
