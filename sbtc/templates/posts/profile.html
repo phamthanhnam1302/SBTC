@@ -79,7 +79,7 @@
   {% for post in page_obj %}
     {% include 'posts/includes/post_card.html' with group_link=True %}
   {% empty %}
-    <p>Пользователь не опубликовал ни одного поста</p>
+    <p>User has not published any posts</p>
   {% endfor %}
   {% include 'posts/includes/paginator.html' %}
 {% endblock %}
