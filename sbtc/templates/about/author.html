@@ -3,70 +3,36 @@
 {% block content %} {% endcomment %}
   {% load static %} 
   <div class="row">
-    <div class="col-5 md-4">   
-      <img src="{% static 'img/me.jpg' %}" class="img-fluid rounded">
+    <h3>Leader</h3>
+    <div class="col-12 d-flex justify-content-center align-items-center">
+      <div class="d-flex flex-column justify-content-center align-items-center">
+        <img src="{% static 'img/cuong.jpg' %}" width="250" class="img-fluid rounded" style="height: 350px !important;">
+        <h5>Đặng Quốc Cường</h5>
+        <h5>20204902</h5>
+      </div>
     </div>
-    <div class="col-12 md-8">
-      <article>
-        <h1 class="display-2">Hello, I'm Ruslan!</h1>
-        <p> 
-          <h4>
-            I work in purchases, and in my spare time
-             time looking for myself in the IT-sphere.<br>
-          </h4> 
-        </p>
-        <p>
-          <h5>
-            I am very social, but I don't like social networks.
-             (yes, you are on my social network site), so the list
-             my social networks are short: 
-          </h5>
-        </p>  
-        <p>
-          <a href="https://vk.com/hobotron" target="_blank" title="VK" alt="...">
-            <img src="{% static 'img/fav/VK.jpg' %}" width="30"> 
-          </a>
-          <a href="https://github.com/ratarov" target="_blank" title="GitHub" alt="...">
-            <img src="{% static 'img/fav/git.png' %}" width="30"> 
-          </a>
-          <a href="https://linkedin.com/in/ruslan-atarov-b3b469a6" 
-            target="_blank" title="LinkedIn"
-          >
-            <img src="{% static 'img/fav/Linkedin.jpg' %}" width="30" alt="..."> 
-          </a>
-        </p>
-        <p>
-          <ul class="list-group"> 
-            <h4>When I'm not looking for myself in IT, you can find me:</h4>
-            <strike>
-              <li class="list-group-item"> 
-                In the company of friends and board games </li>
-              <li class="list-group-item"> 
-                Somewhere on your travels </li>
-              <li class="list-group-item"> 
-                On the slope with a snowboard in hand </li>
-              <li class="list-group-item"> 
-                With joystick at the console </li>
-              <li class="list-group-item"> 
-                On the couch with a book </li>
-            </strike>
-              <li class="list-group-item"> 
-                For the upbringing of beloved twin children </li> 
-          </ul>   
-        </p>
-      </article>
-    </div> 
-  </div>
-  <h1 class="text-center">If this content is not enough, here is a whole tape for you</h1>
-  <div class="row">
-    <div class="col-4 md-8">   
-      <img src="{% static 'img/cat5.JPG' %}" class="img-fluid rounded">
-    </div>
-    <div class="col-4 md-8">   
-      <img src="{% static 'img/cat4.JPG' %}" class="img-fluid rounded">
-    </div>
-    <div class="col-4 md-8">   
-      <img src="{% static 'img/cat2.JPG' %}" class="img-fluid rounded">
+    <h3>Others member</h3>
+    <div class="col-12 d-flex justify-content-center align-items-center flex-wrap">  
+      <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+        <img src="{% static 'img/huy.jpg' %}" width="250" class="img-fluid rounded" style="height: 350px !important;">
+        <h5>Vũ Quang Huy</h5>
+        <h5>20204880</h5>
+      </div>
+      <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+        <img src="{% static 'img/nam.jpg' %}" width="250" class="img-fluid rounded" style="height: 350px !important;">
+        <h5>Phạm Thanh Nam</h5>
+        <h5>20204921</h5>
+      </div>
+      <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+        <img src="{% static 'img/dung.jpg' %}" width="250" class="img-fluid rounded" style="height: 350px !important;">
+        <h5>Nguyễn Trung Dũng</h5>
+        <h5>20204906</h5>
+      </div>
+      <div class="col-6 d-flex flex-column justify-content-center align-items-center">
+        <img src="{% static 'img/quanganh.jpg' %}" width="250" class="img-fluid rounded" style="height: 350px !important;">
+        <h5>Lê Quang Anh</h5>
+        <h5>20204867</h5>
+      </div>
     </div>
   </div>
 {% comment %} {% endblock %}  {% endcomment %}
