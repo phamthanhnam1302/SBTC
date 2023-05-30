@@ -22,17 +22,28 @@
           <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {% for field in form %}
-              <div class="form-group row my-3">
-                <label>
-                  {{ field.label }}
-                  {% if field.field.required %}*{% endif %}
-                </label>
-                <div>
-                  {{ field|addclass:'form-control' }}
-                  <small class="form-text text-muted">{{ field.help_text|safe }}</small>
+              {% if field.name != 'image' %}
+                <div class="form-group row my-3">
+                  <label>{{ field.label }}
+                    {% if field.field.required %}*{% endif %}
+                  </label>
+                  <div>
+                    {{ field|addclass:'form-control' }}
+                    <small class="form-text text-muted">{{ field.help_text|safe }}</small>
+                  </div>
                 </div>
-              </div>
+              {% endif %}
             {% endfor %}
+            <div class="form-group row my-3">
+              <label>Image</label>
+              <div class="text-center">
+                <div style="max-width: 300px; max-height: 300px; margin: 0 auto;">
+                  <img id="image-preview" src="#" alt="Image Preview" style="display: none; max-width: 100%; max-height: 100%;">
+                </div>
+                <input type="file" id="image-input" name="image" accept="image/*" onchange="previewImage(event)">
+                <small class="form-text text-muted">Upload an image</small>
+              </div>
+            </div>
             <div class="d-flex justify-content-end">
               <button type="submit" class="btn btn-primary">
                 {% if is_edit %}
@@ -43,6 +54,24 @@
               </button>
             </div>
           </form>
+          
+          <script>
+          function previewImage(event) {
+            var input = event.target;
+            var preview = document.getElementById('image-preview');
+          
+            if (input.files && input.files[0]) {
+              var reader = new FileReader();
+          
+              reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+              };
+          
+              reader.readAsDataURL(input.files[0]);
+            }
+          }
+          </script>          
         </div>
       </div>
     </div>
