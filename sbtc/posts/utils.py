@@ -15,7 +15,7 @@ def get_posts_context(queryset, request):
         for comment in comments:
             if comment.created > new_comment:
                 new_comment = comment.created
-        if (new_comment > datetime_now - timedelta(hours=0, minutes=12)):
+        if (new_comment > datetime_now - timedelta(hours=12, minutes=0)):
             post_available.append(post)
     return {
         'page_obj': post_available,
