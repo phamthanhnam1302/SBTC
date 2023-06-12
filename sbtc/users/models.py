@@ -11,10 +11,10 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(
         'about the author',
-        max_length=500,
+        max_length=200,
         blank=True,
         null=True,
-        help_text='tell us about yourself'
+        help_text='Tell us about yourself'
     )
     location = models.CharField(
         'City',

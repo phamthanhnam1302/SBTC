@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Subscription posts{% endblock %}
 {% block content %}
-  {% include 'posts/includes/switcher.html' with page_header="Posts by Featured Authors" %}
+  {% include 'posts/includes/switcher.html' with page_header="Posts by Subscribed Authors" %}
   {% for post in page_obj %}
     {% include "posts/includes/post_card.html" with author_link=True group_link=True %}
   {% empty %}

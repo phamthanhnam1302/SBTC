@@ -10,6 +10,8 @@ from .utils import get_posts_context, get_authors_context
 from .forms import CommentForm, PostForm
 from .models import Comment, Group, Follow, Like, Post, User
 
+from datetime import datetime, timedelta
+import pytz
 
 @cache_page(settings.INDEX_CACHE_TIMEOUT, key_prefix="index_page")
 def index(request, tag_slug=None):
@@ -18,7 +20,19 @@ def index(request, tag_slug=None):
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
         posts = posts.filter(tags__in=[tag])
-    context = get_posts_context(posts, request)
+    datetime_now = datetime.now().replace(tzinfo=pytz.UTC)
+    post_available = []
+    for post in posts:
+        comments = post.comments.all()
+        new_comment = post.pub_date
+        for comment in comments:
+            if comment.created > new_comment:
+                new_comment = comment.created
+        if (new_comment > datetime_now - timedelta(hours=12, minutes=0)):
+            post_available.append(post)
+        if (new_comment < datetime_now - timedelta(hours=12, minutes=0)):
+            post_delete(request, post.id)
+    context = get_posts_context(post_available, request)
     context['tag'] = tag
     context['tags_colors'] = settings.TAGS_COLORS
     return render(request, 'posts/index.html', context)
@@ -26,24 +40,40 @@ def index(request, tag_slug=None):
 
 def search(request):
     search = request.GET.get('q')
-    context = get_posts_context(
-        Post.objects.select_related('group', 'author').filter(
-            text__icontains=search
-        ),
-        request
-    )
+    posts = Post.objects.select_related('group', 'author').filter(text__icontains=search)
+    datetime_now = datetime.now().replace(tzinfo=pytz.UTC)
+    post_available = []
+    for post in posts:
+        comments = post.comments.all()
+        new_comment = post.pub_date
+        for comment in comments:
+            if comment.created > new_comment:
+                new_comment = comment.created
+        if (new_comment > datetime_now - timedelta(hours=12, minutes=0)):
+            post_available.append(post)
+        if (new_comment < datetime_now - timedelta(hours=12, minutes=0)):
+            post_delete(request, post.id)
+    context = get_posts_context(post_available, request)
     context['tags_colors'] = settings.TAGS_COLORS
     return render(request, 'posts/index.html', context)
 
 
 @login_required
 def follow_index(request):
-    context = get_posts_context(
-        Post.objects.filter(
-            author__following__user=request.user
-        ).select_related('group'),
-        request
-    )
+    posts = Post.objects.filter(author__following__user=request.user).select_related('group')
+    datetime_now = datetime.now().replace(tzinfo=pytz.UTC)
+    post_available = []
+    for post in posts:
+        comments = post.comments.all()
+        new_comment = post.pub_date
+        for comment in comments:
+            if comment.created > new_comment:
+                new_comment = comment.created
+        if (new_comment > datetime_now - timedelta(hours=12, minutes=0)):
+            post_available.append(post)
+        if (new_comment < datetime_now - timedelta(hours=12, minutes=0)):
+            post_delete(request, post.id)
+    context = get_posts_context(post_available, request)
     context['tags_colors'] = settings.TAGS_COLORS
     return render(request, 'posts/follow.html', context)
 
@@ -70,11 +100,21 @@ def group_posts(request, slug):
     context = {
         'group': group,
     }
+    posts = group.posts.select_related('author')
+    datetime_now = datetime.now().replace(tzinfo=pytz.UTC)
+    post_available = []
+    for post in posts:
+        comments = post.comments.all()
+        new_comment = post.pub_date
+        for comment in comments:
+            if comment.created > new_comment:
+                new_comment = comment.created
+        if (new_comment > datetime_now - timedelta(hours=12, minutes=0)):
+            post_available.append(post)
+        if (new_comment < datetime_now - timedelta(hours=12, minutes=0)):
+            post_delete(request, post.id)
     context.update(
-        get_posts_context(
-            group.posts.select_related('author'),
-            request
-        )
+        get_posts_context(post_available, request)
     )
     context['tags_colors'] = settings.TAGS_COLORS
     return render(request, 'posts/group_list.html', context)
@@ -85,8 +125,21 @@ def profile(request, username):
     context = {
         'author': author,
     }
+    posts = author.posts.select_related('group')
+    datetime_now = datetime.now().replace(tzinfo=pytz.UTC)
+    post_available = []
+    for post in posts:
+        comments = post.comments.all()
+        new_comment = post.pub_date
+        for comment in comments:
+            if comment.created > new_comment:
+                new_comment = comment.created
+        if (new_comment > datetime_now - timedelta(hours=12, minutes=0)):
+            post_available.append(post)
+        if (new_comment < datetime_now - timedelta(hours=12, minutes=0)):
+            post_delete(request, post.id)
     context.update(
-        get_posts_context(author.posts.select_related('group'), request)
+        get_posts_context(post_available, request)
     )
     if request.user.is_authenticated:
         context['following'] = request.user.follower.filter(
@@ -146,7 +199,13 @@ def post_edit(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if post.author != request.user:
         return redirect('posts:post_detail', post_id)
-
+    info_post = get_object_or_404(
+        Post.objects.select_related('group', 'author'),
+        id=post_id
+    )
+    image_url_post = ''
+    if (info_post.image):
+        image_url_post = info_post.image.url
     form = PostForm(
         request.POST or None,
         files=request.FILES or None,
@@ -160,7 +219,8 @@ def post_edit(request, post_id):
 
     context = {
         'form': form,
-        'is_edit': True
+        'is_edit': True,
+        'image_url': image_url_post,
     }
     return render(request, 'posts/create_post.html', context)
 

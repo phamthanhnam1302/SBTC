@@ -31,7 +31,7 @@
                href="{% url 'about:tech' %}">About the project</a>
           </li>
           {% if user.is_authenticated %}
-            <li class="nav-item">
+            <li class="nav-item mx-2">
               <a class="nav-link {% if view_name == 'posts:post_create' %} active {% endif %}"
                  href="{% url 'posts:post_create' %}">
                  New posts

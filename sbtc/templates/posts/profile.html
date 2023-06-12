@@ -15,36 +15,40 @@
           <img src="{% static 'img/avatar.jpg' %}" width="200" height="200" class="d-inline-block" alt="">
         {% endif %}
       </div>
-      <div class="col-auto col-md-6">
+      <div class="col-auto col-md-6 d-flex flex-column justify-content-center">
         <div class="row">
-          <div class="col-3">
+          <div>
             Author:
-          </div>
-          <div class="col-auto">
             {% if author.get_full_name %} 
               {{ author.get_full_name }} |
             {% endif %} 
             {{ author.username }}
           </div>
         </div>
-        {% if author.profile.bio %}
         <div class="row">
-          <div class="col-3">About the author:</div>
-          <div class="col md-auto">{{ author.profile.bio|linebreaksbr }}</div>
+          <div>
+            About the author:
+            {% if author.profile.bio %}
+              {{ author.profile.bio|linebreaksbr }}
+            {% endif %} 
+          </div>
         </div>
-        {% endif %}
-        {% if author.profile.location %}
         <div class="row">
-          <div class="col-3">Город:</div>
-          <div class="col md-auto">{{ author.profile.location }}</div>
+          <div>
+            Location:
+              {% if author.profile.location %}
+                {{ author.profile.location }}
+              {% endif %}
+          </div>
         </div>
-        {% endif %}
-        {% if author.profile.birth_date %}
         <div class="row">
-          <div class="col-3">Birthday:</div>
-          <div class="col md-auto">{{ author.profile.birth_date|date:"j M" }}</div>
+          <div>
+            Birthday:
+            {% if author.profile.birth_date %}
+              {{ author.profile.birth_date|date:"j M" }}
+            {% endif %}
+          </div>
         </div>
-        {% endif %}
       </div>
     </div>
   </div>
