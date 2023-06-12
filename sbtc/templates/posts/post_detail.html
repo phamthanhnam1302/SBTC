@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load thumbnail %}
 {% load static %}
-{% block title %}Fast {{ post.text|truncatechars:30 }}{% endblock %}
+{% block title %}{{ post.text|truncatechars:30 }}{% endblock %}
   {% block content %}
       <div class="row border rounded mb-4 shadow-sm">
         <div class="col p-4 d-flex flex-column">  

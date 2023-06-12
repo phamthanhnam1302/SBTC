@@ -70,27 +70,87 @@
         </div>
         {% endfor %}
         {% for field in profile_form %} 
-        <div class="form-group row my-3">
-          <label for="{{ field.id_for_label }}">
-          {{ field.label }}
-            {% if field.field.required %}
-            <span class="required text-danger">*</span>
-            {% endif %}
-          </label>
-          {{ field|addclass:'form-control' }} 
-          {% if field.help_text %}
-            <small id="{{ field.id_for_label }}-help" class="form-text text-muted">
-            {{ field.help_text|safe }}
-            </small>
+          {% if field.name != 'photo' %}
+            <div class="form-group row my-3">
+              <label for="{{ field.id_for_label }}">
+              {{ field.label }}
+                {% if field.field.required %}
+                <span class="required text-danger">*</span>
+                {% endif %}
+              </label>
+              {{ field|addclass:'form-control' }} 
+              {% if field.help_text %}
+                <small id="{{ field.id_for_label }}-help" class="form-text text-muted">
+                {{ field.help_text|safe }}
+                </small>
+              {% endif %}
+            </div>
           {% endif %}
-        </div>
         {% endfor %}
+        {% if user.profile.photo %}
+          <div class="form-group row my-3 d-flex justify-content-center">
+            <img id="photo-personal" src="{{ user.profile.photo.url }}"alt="Photo" style="max-width: 300px; max-height: 300px; margin: 0.5rem 0;">
+          </div>
+          <div class="form-group row my-3">
+            <label>Change</label>
+            <div class="px-0 mt-0">
+              <div class="d-flex justify-content-center" style="max-width: 300px; max-height: 300px; margin: 0 auto;">
+                <img id="photo-change-preview" src="#" alt="Photo Change Preview" style="display: none; max-width: 300px; max-height: 300px; margin: 0.5rem 0;">
+              </div>
+              <input type="file" id="photo-change-input" name="photo-change" accept="image/*" onchange="previewChangePhoto(event)">
+              <small class="form-text text-muted">Attach your photo</small>
+            </div>
+          </div>
+        {% else %}
+          <div class="form-group row my-3">
+            <label>Photo</label>
+            <div class="px-0 mt-0">
+              <div class="d-flex justify-content-center" style="max-width: 300px; max-height: 300px; margin: 0 auto;">
+                <img id="photo-preview" src="#" alt="Photo Preview" style="display: none; max-width: 300px; max-height: 300px; margin: 0.5rem 0;">
+              </div>
+              <input type="file" id="photo-input" name="photo" accept="image/*" onchange="previewPhoto(event)">
+              <small class="form-text text-muted">Attach your photo</small>
+            </div>
+          </div>
+        {% endif %}
         <div class="col-md-6 offset-md-4">
         <button type="submit" class="btn btn-primary">
           Save Changes
         </button>
         </div>
       </form>
+      <script>
+        function previewChangePhoto(event) {
+          var input = event.target;
+          var preview = document.getElementById('photo-preview');
+        
+          if (input.files && input.files[0]) {
+            var reader = new FileReader();
+        
+            reader.onload = function(e) {
+              preview.src = e.target.result;
+              preview.style.display = 'block';
+            };
+        
+            reader.readAsDataURL(input.files[0]);
+          }
+        }
+        function previewPhoto(event) {
+          var input = event.target;
+          var preview = document.getElementById('photo-preview');
+        
+          if (input.files && input.files[0]) {
+            var reader = new FileReader();
+        
+            reader.onload = function(e) {
+              preview.src = e.target.result;
+              preview.style.display = 'block';
+            };
+        
+            reader.readAsDataURL(input.files[0]);
+          }
+        }
+      </script> 
     </div> <!-- col -->
   </div> <!-- row -->
 {% endblock %}
