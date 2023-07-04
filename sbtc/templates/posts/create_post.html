@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}
   {% if is_edit %}
-  Edit post
+    Edit post
   {% else %}
     New post
   {% endif %}
@@ -35,28 +35,97 @@
               {% endif %}
             {% endfor %}
             {% if image_url %}
+              {% for field in form %}
+                {% if field.name == 'image' %}
+                  <div class="form-group row my-3" style="display: none;">
+                    <label>{{ field.label }}
+                      {% if field.field.required %}*{% endif %}
+                    </label>
+                    <div>
+                      {{ field|addclass:'form-control' }}
+                      <small class="form-text text-muted">{{ field.help_text|safe }}</small>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
               <div class="form-group row my-3 d-flex justify-content-center">
                 <img id="photo-personal" src="{{ image_url }}" alt="Image Change" style="max-width: 300px; max-height: 300px; margin: 0.5rem 0;">
               </div>
-              <div class="form-group row my-3">
-                <label>Change</label>
+              <div id="remove_button" class="form-group justify-content-center my-3" style="display: flex;">
+                <button type="button" onclick="handleRemoveImage(event)" class="btn btn-danger w-auto">Remove the Image</button>
+              </div>
+              <div id="confirm_button" class="form-group justify-content-around my-3" style="display: none;">
+                <button type="button" onclick="handleNoRemoveImage(event)" class="btn btn-secondary">No</button>
+                <button type="button" onclick="handleYesRemoveImage(event)" class="btn btn-primary">Yes</button>
+              </div>
+              <div id="change_button" class="form-group justify-content-around my-3" style="display: none;">
+                <button id="button_upload_image_change" type="button" onclick="handleUploadChangeImage(event)" class="btn btn-secondary">Upload Image</button>
+                <button id="button_generate_image_change" type="button" onclick="handleGenerateChangeImage(event)" class="btn btn-secondary">Generate Image by Keyword</button>
+              </div>
+              <div id="upload_image_change" class="form-group row my-3" style="display: none;">
                 <div class="text-center">
                   <div class="d-flex justify-content-center" style="max-width: 300px; max-height: 300px; margin: 0 auto;">
-                    <img id="image-change-preview" src="#" alt="Image Change Preview" style="display: none; max-width: 300px; max-height: 300px; margin: 0.5rem 0;">
+                    <img id="change-image-preview" src="#" alt="Image Preview" style="display: none; max-width: 300px; max-height: 300px; margin: 0.5rem 0;">
                   </div>
-                  <input type="file" id="image-change-input" name="image-change" accept="image/*" onchange="previewChangeImage(event)">
+                  <input type="file" id="change-image-input" name="image" accept="image/*" onchange="previewChangeImage(event)">
                   <small class="form-text text-muted">Upload an image</small>
                 </div>
               </div>
+              <div id="generate_image_change" class="form-group row my-3" style="display: none;">
+                <div class="form-group row my-3 d-flex justify-content-center">
+                  <label>Keywords</label>
+                  <div>
+                    <input type="text" name="keyword" class="form-control" id="change_id_keywords">
+                  </div>
+                  <button id="button_generate_image_change" type="button" onclick="generateChangeImage(event)" class="btn btn-success w-25 mt-2">Generate</button>
+                </div>
+                <div class="text-center">
+                  <div class="d-flex justify-content-center" style="max-width: 300px; max-height: 300px; margin: 0 auto;">
+                    <img id="change-image-generate-preview" src="#" alt="Image Preview" style="display: none; max-width: 300px; max-height: 300px; margin: 0.5rem 0;">
+                  </div>
+                  <input type="file" id="change-image-generate-input" name="image-generate" accept="image/*" style="display: none;">
+                </div>
+              </div>
             {% else %}
-              <div class="form-group row my-3">
-                <label>Image</label>
+            {% for field in form %}
+              {% if field.name == 'image' %}
+                <div class="form-group row my-3" style="display: none;">
+                  <label>{{ field.label }}
+                    {% if field.field.required %}*{% endif %}
+                  </label>
+                  <div>
+                    {{ field|addclass:'form-control' }}
+                    <small class="form-text text-muted">{{ field.help_text|safe }}</small>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+              <div class="form-group d-flex justify-content-around my-3">
+                <button id="button_upload_image" type="button" onclick="handleUploadImage(event)" class="btn btn-secondary">Upload Image</button>
+                <button id="button_generate_image" type="button" onclick="handleGenerateImage(event)" class="btn btn-secondary">Generate Image by Keyword</button>
+              </div>
+              <div id="upload_image" class="form-group row my-3" style="display: none;">
                 <div class="text-center">
                   <div class="d-flex justify-content-center" style="max-width: 300px; max-height: 300px; margin: 0 auto;">
                     <img id="image-preview" src="#" alt="Image Preview" style="display: none; max-width: 300px; max-height: 300px; margin: 0.5rem 0;">
                   </div>
                   <input type="file" id="image-input" name="image" accept="image/*" onchange="previewImage(event)">
                   <small class="form-text text-muted">Upload an image</small>
+                </div>
+              </div>
+              <div id="generate_image" class="form-group row my-3" style="display: none;">
+                <div class="form-group row my-3 d-flex justify-content-center">
+                  <label>Keywords</label>
+                  <div>
+                    <input type="text" name="keyword" class="form-control" id="id_keywords">
+                  </div>
+                  <button id="button_generate_image" type="button" onclick="generateImage(event)" class="btn btn-success w-25 mt-2">Generate</button>
+                </div>
+                <div class="text-center">
+                  <div class="d-flex justify-content-center" style="max-width: 300px; max-height: 300px; margin: 0 auto;">
+                    <img id="image-generate-preview" src="#" alt="Image Preview" style="display: none; max-width: 300px; max-height: 300px; margin: 0.5rem 0;">
+                  </div>
+                  <input type="file" id="image-generate-input" name="image-generate" accept="image/*" style="display: none;">
                 </div>
               </div>
             {% endif %}
@@ -72,10 +141,185 @@
           </form>
           
           <script>
+            function handleRemoveImage(event) {
+              if (event) {
+                event.preventDefault();
+              }
+              const remove_button = document.getElementById('remove_button');
+              remove_button.style.display = 'none';
+              const confirm_button = document.getElementById('confirm_button');
+              confirm_button.style.display = 'flex';
+            }
+            function handleNoRemoveImage(event) {
+              if (event) {
+                event.preventDefault();
+              }
+              const remove_button = document.getElementById('remove_button');
+              remove_button.style.display = 'flex';
+              const confirm_button = document.getElementById('confirm_button');
+              confirm_button.style.display = 'none';
+            }
+            function handleYesRemoveImage(event) {
+              if (event) {
+                event.preventDefault();
+              }
+              const photo_personal = document.getElementById('photo-personal');
+              photo_personal.src = '#'
+              photo_personal.style.display = 'none';
+              const remove_button = document.getElementById('remove_button');
+              remove_button.style.display = 'none';
+              const confirm_button = document.getElementById('confirm_button');
+              confirm_button.style.display = 'none';
+              const change_button = document.getElementById('change_button');
+              change_button.style.display = 'flex';
+              var input_clear = document.getElementById('image-clear_id').checked;
+              input_clear = true;
+            }
+            function handleUploadChangeImage(event) {
+              if (event) {
+                event.preventDefault();
+              }
+              const image_generate_input = document.getElementById('change-image-generate-input');
+              image_generate_input.value = '';
+              var preview_generate = document.getElementById('change-image-generate-preview');
+              preview_generate.src = '#';
+              preview_generate.style.display = 'none';
+              var input_keyword = document.getElementById("change_id_keywords")
+              input_keyword.value = ''
+              var upload_image = document.getElementById('upload_image_change');
+              upload_image.style.display = 'block'
+              var button_upload_image = document.getElementById('button_upload_image_change');
+              button_upload_image.classList.add("btn-primary");
+              button_upload_image.classList.remove("btn-secondary");
+              var generate_image = document.getElementById('generate_image_change');
+              generate_image.style.display = 'none'
+              var button_upload_image = document.getElementById('button_generate_image_change');
+              button_upload_image.classList.add("btn-secondary");
+              button_upload_image.classList.remove("btn-primary");
+            }
+            function handleGenerateChangeImage(event) {
+              if (event) {
+                event.preventDefault();
+              }
+              var preview = document.getElementById('change-image-input');
+              preview.value = '';
+              var preview = document.getElementById('change-image-preview');
+              preview.src = '#';
+              preview.style.display = 'none';
+              var upload_image = document.getElementById('upload_image_change');
+              upload_image.style.display = 'none'
+              var button_upload_image = document.getElementById('button_upload_image_change');
+              button_upload_image.classList.add("btn-secondary");
+              button_upload_image.classList.remove("btn-primary");
+              var generate_image = document.getElementById('generate_image_change');
+              generate_image.style.display = 'block'
+              var button_generate_image = document.getElementById('button_generate_image_change');
+              button_generate_image.classList.add("btn-primary");
+              button_generate_image.classList.remove("btn-secondary");
+            }
             function previewChangeImage(event) {
               var input = event.target;
-              var preview = document.getElementById('image-change-preview');
+              var preview = document.getElementById('change-image-preview');
+              var id_image = document.getElementById('id_image')
+              if (input.files && input.files[0]) {
+                var reader = new FileReader();
             
+                reader.onload = function(e) {
+                  preview.src = e.target.result;
+                  preview.style.display = 'block';
+                  id_image.files = input.files;
+                };
+            
+                reader.readAsDataURL(input.files[0]);
+              }
+            }
+            function generateChangeImage(event) {
+              if (event) {
+                event.preventDefault();
+              }
+              var input_keyword = document.getElementById("change_id_keywords").value
+              if (input_keyword) {
+                const apiUrl = `https://lexica.art/api/v1/search?q=${input_keyword}`;
+                fetch(apiUrl)
+                  .then(response => response.json())
+                  .then(data => {
+                    data_images_not_grid = []
+                    data_images = data.images
+                    for (i = 0; i < data_images.length; i++) {
+                      if (data_images[i].grid == false) {
+                        data_images_not_grid.push(data_images[i].src)
+                      }
+                    }
+                    var preview_generate = document.getElementById('change-image-generate-preview');
+                    var image_generate_input = document.getElementById('change-image-generate-input');
+                    var id_image = document.getElementById('id_image')
+                    const url_image = data_images_not_grid[Math.floor((Math.random()*data_images_not_grid.length))]
+                    preview_generate.src = url_image
+                    preview_generate.style.display = 'block';
+                    
+                    fetch(url_image)
+                      .then(response => response.blob())
+                      .then(blob => {
+                        const file = new File([blob], 'image.jpg', { type: 'image/jpeg' });
+                        const fileList = new DataTransfer();
+                        fileList.items.add(file);
+                        image_generate_input.files = fileList.files;
+                        id_image.files = image_generate_input.files;
+                      })
+                      .catch(error => {
+                        console.error('An error occurred while converting image URL to file:', error);
+                      });
+                  })
+                  .catch(error => {
+                    console.error(error);
+                  });
+              }
+            }
+            function handleUploadImage(event) {
+              if (event) {
+                event.preventDefault();
+              }
+              const image_generate_input = document.getElementById('image-generate-input');
+              image_generate_input.value = '';
+              var preview_generate = document.getElementById('image-generate-preview');
+              preview_generate.src = '#';
+              preview_generate.style.display = 'none';
+              var input_keyword = document.getElementById("id_keywords")
+              input_keyword.value = ''
+              var upload_image = document.getElementById('upload_image');
+              upload_image.style.display = 'block'
+              var button_upload_image = document.getElementById('button_upload_image');
+              button_upload_image.classList.add("btn-primary");
+              button_upload_image.classList.remove("btn-secondary");
+              var generate_image = document.getElementById('generate_image');
+              generate_image.style.display = 'none'
+              var button_upload_image = document.getElementById('button_generate_image');
+              button_upload_image.classList.add("btn-secondary");
+              button_upload_image.classList.remove("btn-primary");
+            }
+            function handleGenerateImage(event) {
+              if (event) {
+                event.preventDefault();
+              }
+              var preview = document.getElementById('image-input');
+              preview.value = '';
+              var preview = document.getElementById('image-preview');
+              preview.src = '#';
+              preview.style.display = 'none';
+              var upload_image = document.getElementById('upload_image');
+              upload_image.style.display = 'none'
+              var button_upload_image = document.getElementById('button_generate_image');
+              button_upload_image.classList.add("btn-secondary");
+              button_upload_image.classList.remove("btn-primary");
+              var generate_image = document.getElementById('generate_image');
+              generate_image.style.display = 'block'
+              var button_generate_image = document.getElementById('button_generate_image');
+              button_generate_image.classList.add("btn-primary");
+              button_generate_image.classList.remove("btn-secondary");
+            }
+            function previewImage(event) {
+              var input = event.target;
+              var preview = document.getElementById('image-preview');
               if (input.files && input.files[0]) {
                 var reader = new FileReader();
             
@@ -87,19 +331,46 @@
                 reader.readAsDataURL(input.files[0]);
               }
             }
-            function previewImage(event) {
-              var input = event.target;
-              var preview = document.getElementById('image-preview');
-            
-              if (input.files && input.files[0]) {
-                var reader = new FileReader();
-            
-                reader.onload = function(e) {
-                  preview.src = e.target.result;
-                  preview.style.display = 'block';
-                };
-            
-                reader.readAsDataURL(input.files[0]);
+            function generateImage(event) {
+              if (event) {
+                event.preventDefault();
+              }
+              var input_keyword = document.getElementById("id_keywords").value
+              if (input_keyword) {
+                const apiUrl = `https://lexica.art/api/v1/search?q=${input_keyword}`;
+                fetch(apiUrl)
+                  .then(response => response.json())
+                  .then(data => {
+                    data_images_not_grid = []
+                    data_images = data.images
+                    for (i = 0; i < data_images.length; i++) {
+                      if (data_images[i].grid == false) {
+                        data_images_not_grid.push(data_images[i].src)
+                      }
+                    }
+                    var preview_generate = document.getElementById('image-generate-preview');
+                    var image_generate_input = document.getElementById('image-generate-input');
+                    var id_image = document.getElementById('id_image')
+                    const url_image = data_images_not_grid[Math.floor((Math.random()*data_images_not_grid.length))];
+                    preview_generate.src = url_image
+                    preview_generate.style.display = 'block';
+                    
+                    fetch(url_image)
+                      .then(response => response.blob())
+                      .then(blob => {
+                        const file = new File([blob], 'image.jpg', { type: 'image/jpeg' });
+                        const fileList = new DataTransfer();
+                        fileList.items.add(file);
+                        image_generate_input.files = fileList.files;
+                        id_image.files = image_generate_input.files;
+                      })
+                      .catch(error => {
+                        console.error('An error occurred while converting image URL to file:', error);
+                      });
+                  })
+                  .catch(error => {
+                    console.error(error);
+                  });
               }
             }
           </script>          
