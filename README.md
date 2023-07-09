@@ -10,7 +10,7 @@ Mini-social network for blogging: posts, comments, likes, follow
 ### Available Features
 - Pages: main page, author profile with posts
 - Create, edit posts with images attached and delete posts
-- Ability to generate images automatically with tags (Cycle GAN)
+- Ability to generate images automatically with keywords (GAN)
 - Create comments on posts
 - Possibility to follow the author (subscription feed with transition to the main page)
 - Custom admin panel
