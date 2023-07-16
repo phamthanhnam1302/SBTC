@@ -21,7 +21,7 @@
             {{ post.author.username }}
           {% endif %}
         </a><br>
-        <small>Publication date: {{ post.pub_date|date:"j M Y" }}</small><br>
+        <small>Publication date: {{ post.pub_date|date:"j M Y H:i" }}</small><br>
         {% if post.group and group_link %} 
           <small>
             Группа: 
