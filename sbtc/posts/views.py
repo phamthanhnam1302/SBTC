@@ -28,8 +28,6 @@ def index(request, tag_slug=None):
         for comment in comments:
             if comment.created > new_comment:
                 new_comment = comment.created
-        print(datetime_now - timedelta(hours=0, minutes=5))
-        print(new_comment)
         if (new_comment > datetime_now - timedelta(hours=7, minutes=0) - timedelta(hours=12, minutes=0)):
             post_available.append(post)
         if (new_comment < datetime_now - timedelta(hours=7, minutes=0) - timedelta(hours=12, minutes=0)):
