@@ -28,9 +28,11 @@ def index(request, tag_slug=None):
         for comment in comments:
             if comment.created > new_comment:
                 new_comment = comment.created
-        if (new_comment > datetime_now - timedelta(hours=12, minutes=0)):
+        print(datetime_now - timedelta(hours=0, minutes=5))
+        print(new_comment)
+        if (new_comment > datetime_now - timedelta(hours=7, minutes=0) - timedelta(hours=12, minutes=0)):
             post_available.append(post)
-        if (new_comment < datetime_now - timedelta(hours=12, minutes=0)):
+        if (new_comment < datetime_now - timedelta(hours=7, minutes=0) - timedelta(hours=12, minutes=0)):
             post_delete(request, post.id)
     context = get_posts_context(post_available, request)
     context['tag'] = tag
@@ -49,9 +51,9 @@ def search(request):
         for comment in comments:
             if comment.created > new_comment:
                 new_comment = comment.created
-        if (new_comment > datetime_now - timedelta(hours=12, minutes=0)):
+        if (new_comment > datetime_now - timedelta(hours=7, minutes=0) - timedelta(hours=12, minutes=0)):
             post_available.append(post)
-        if (new_comment < datetime_now - timedelta(hours=12, minutes=0)):
+        if (new_comment < datetime_now - timedelta(hours=7, minutes=0) - timedelta(hours=12, minutes=0)):
             post_delete(request, post.id)
     context = get_posts_context(post_available, request)
     context['tags_colors'] = settings.TAGS_COLORS
@@ -69,9 +71,9 @@ def follow_index(request):
         for comment in comments:
             if comment.created > new_comment:
                 new_comment = comment.created
-        if (new_comment > datetime_now - timedelta(hours=12, minutes=0)):
+        if (new_comment > datetime_now - timedelta(hours=7, minutes=0) - timedelta(hours=12, minutes=0)):
             post_available.append(post)
-        if (new_comment < datetime_now - timedelta(hours=12, minutes=0)):
+        if (new_comment < datetime_now - timedelta(hours=7, minutes=0) - timedelta(hours=12, minutes=0)):
             post_delete(request, post.id)
     context = get_posts_context(post_available, request)
     context['tags_colors'] = settings.TAGS_COLORS
@@ -109,9 +111,9 @@ def group_posts(request, slug):
         for comment in comments:
             if comment.created > new_comment:
                 new_comment = comment.created
-        if (new_comment > datetime_now - timedelta(hours=12, minutes=0)):
+        if (new_comment > datetime_now - timedelta(hours=7, minutes=0) - timedelta(hours=12, minutes=0)):
             post_available.append(post)
-        if (new_comment < datetime_now - timedelta(hours=12, minutes=0)):
+        if (new_comment < datetime_now - timedelta(hours=7, minutes=0) - timedelta(hours=12, minutes=0)):
             post_delete(request, post.id)
     context.update(
         get_posts_context(post_available, request)
@@ -134,9 +136,9 @@ def profile(request, username):
         for comment in comments:
             if comment.created > new_comment:
                 new_comment = comment.created
-        if (new_comment > datetime_now - timedelta(hours=12, minutes=0)):
+        if (new_comment > datetime_now - timedelta(hours=7, minutes=0) - timedelta(hours=12, minutes=0)):
             post_available.append(post)
-        if (new_comment < datetime_now - timedelta(hours=12, minutes=0)):
+        if (new_comment < datetime_now - timedelta(hours=7, minutes=0) - timedelta(hours=12, minutes=0)):
             post_delete(request, post.id)
     context.update(
         get_posts_context(post_available, request)
